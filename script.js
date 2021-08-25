@@ -12,13 +12,16 @@ h1Select.style.color = 'red';
 const container = document.querySelector('.container')
 
 function makeGrid(rows, cols) {
-  container.style.setProperty('--grid-rows', rows);
+    if (rows >= 1 && rows <= 64) {
+       container.style.setProperty('--grid-rows', rows);
   container.style.setProperty('--grid-cols', cols);
   for (let i = 0; i < (rows * cols); i++) {
     let gridCell = document.createElement("div");
     container.appendChild(gridCell).className = "grid-item";
     
-  };
+  }; 
+    }
+  
   
 };
 
@@ -28,9 +31,7 @@ function clearGrid() {
     const gridCells = document.querySelectorAll('.grid-item');
 
     gridCells.forEach((item) => {
-        
-           item.style.backgroundColor = 'var(--grid-color)' 
-        
+        item.style.backgroundColor = 'var(--grid-color)' 
     });
     
 }
@@ -49,14 +50,34 @@ function drawNormal() {
 }
 
 
-function getGrid() {
-    let selectGetGridButton = document.querySelector('#get-grid');
-    
+function newGrid() {
+    const selectGetGridButton = document.querySelector('#get-grid');
+ 
+    selectGetGridButton.addEventListener('click', () => {
+        let inputValue = document.querySelector('#number-input').value;
+        console.log("input value is: " + inputValue)
+
+        if (inputValue >= 1 && inputValue <= 64) {
+         removeGrid();
+        makeGrid(inputValue, inputValue);
+
+        // This will need to be changed once Rainbow and Gradient are implemented.
+        drawNormal();   
+        }
+        
+    }); 
+}
+
+function removeGrid() {
+    const container = document.querySelector('.container')
 
     
-        console.log(input.value)
-    
-}
+  while (container.firstChild) {
+    container.removeChild(container.lastChild);
+  }
+      }; 
+
+
 
 
 function clearButton() {
@@ -74,7 +95,7 @@ function spanColor() {
     const inputField = document.querySelector('#number-input');
     const textSpan = document.querySelector('#input-span')
 
-    if (inputField.value >= 16 && inputField.value <= 64) {
+    if (inputField.value >= 1 && inputField.value <= 64) {
         textSpan.style.color = 'green';
         textSpan.style.scale = '1'
         inputField.value = Math.floor(inputField.value);
@@ -107,7 +128,8 @@ function textEnter() {
 
 // End input field and message //
 
-//getGrid();
+newGrid();
+//removeGrid();
 clearButton();
 drawNormal();
 
