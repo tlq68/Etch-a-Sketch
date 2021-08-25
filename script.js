@@ -1,3 +1,5 @@
+// Start page setup //
+
 window.onload = function() {
     const inputField = document.querySelector('#number-input');
     inputField.value = '';
@@ -23,74 +25,91 @@ function makeGrid(rows, cols) {
 makeGrid(16, 16);
 
 function clearGrid() {
-    const cells = document.querySelectorAll('.grid-item');
+    const gridCells = document.querySelectorAll('.grid-item');
 
-    cells.forEach((item) => {
+    gridCells.forEach((item) => {
         
-           item.style.backgroundColor = 'rgb(238, 237, 237)' 
+           item.style.backgroundColor = 'var(--grid-color)' 
         
     });
     
 }
 
-function clearButton() {
-    const reset = document.querySelector('#clear-button');
-    reset.addEventListener('click', () => {
-        clearGrid();
-    });
-}
+// End page setup //
+
+// Start button logic // 
 
 function drawNormal() {
-    const change = document.querySelectorAll('.grid-item');
-    change.forEach((item) => {
+    const gridCells = document.querySelectorAll('.grid-item');
+    gridCells.forEach((item) => {
         item.addEventListener('mouseover', () => {
           item.style.backgroundColor = '#333';   
         });
     }); 
 }
 
+
 function getGrid() {
-    let button = document.querySelector('#get-grid');
-    let input = document.querySelector('#number-input')
-    button.addEventListener('click', () => {
+    let selectGetGridButton = document.querySelector('#get-grid');
+    
 
-        if(typeof input.value === 'number' && input.value >= 16 && input.value <= 64) {
-           console.log(input.value)
-        input.value = null; 
-        } else {
-            warning();
-        }
-        
-    });
-}
-
-function warning() {
-    const inputSpan = document.querySelector('#get-grid');
-
-    inputSpan.addEventListener('click', () => {
-        if (!inputSpan) return; 
-            inputSpan.currentTime = 0;
-            warningTransition();
-    });
+    
+        console.log(input.value)
     
 }
 
-function warningTransition() {
-    const change = document.querySelector('#input-span');
-    change.classList.add('warning');
+
+function clearButton() {
+    const selectClearButton = document.querySelector('#clear-button');
+    selectClearButton.addEventListener('click', () => {
+        clearGrid();
+    });
 }
 
-function removeTransition(e) {
-    if(e.propertyName !== 'transform') return; // skip it if itś not a transform.
-    this.classList.remove('warning');
+// End button logic //
+
+// Start input field and message //
+
+function spanColor() {
+    const inputField = document.querySelector('#number-input');
+    const textSpan = document.querySelector('#input-span')
+
+    if (inputField.value >= 16 && inputField.value <= 64) {
+        textSpan.style.color = 'green';
+        textSpan.style.scale = '1'
+        inputField.value = Math.floor(inputField.value);
+    }  else {
+        inputField.value = null;
+        textSpan.style.color = 'red';
+        textSpan.style.scale = '1.2'
+    } 
 }
 
-const input = document.querySelector('#input-span');
-input.addEventListener('transitionend', removeTransition);
+function pressGetGridButton() {
+    
+    const selectGridButton = document.querySelector('#get-grid');
+    
 
+    selectGridButton.addEventListener('click', () => {
+        spanColor();
+    });
+}
 
-getGrid();
+function textEnter() {
+    const inputField = document.querySelector('#number-input');
+
+    inputField.addEventListener('keypress', function(event) {
+        if (event.code === 'Enter') {
+            spanColor();
+        }
+    });
+}
+
+// End input field and message //
+
+//getGrid();
 clearButton();
 drawNormal();
 
-
+pressGetGridButton();
+textEnter();
