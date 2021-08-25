@@ -51,6 +51,14 @@ button {
     font-size: 12px;
     align-self: flex-start;
     margin-top: 10px;
+    transition: all .5s ease;
+}
+
+.warning {
+    color: red;
+    transform: scale(1.2)
+ 
+  
 }
 
 @media (min-width: 1140px) {

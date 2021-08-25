@@ -1,3 +1,9 @@
+window.onload = function() {
+    const inputField = document.querySelector('#number-input');
+    inputField.value = '';
+}
+
+
 const h1Select = document.querySelector('h1');
 h1Select.style.color = 'red';
 
@@ -43,6 +49,48 @@ function drawNormal() {
     }); 
 }
 
+function getGrid() {
+    let button = document.querySelector('#get-grid');
+    let input = document.querySelector('#number-input')
+    button.addEventListener('click', () => {
 
+        if(typeof input.value === 'number' && input.value >= 16 && input.value <= 64) {
+           console.log(input.value)
+        input.value = null; 
+        } else {
+            warning();
+        }
+        
+    });
+}
+
+function warning() {
+    const inputSpan = document.querySelector('#get-grid');
+
+    inputSpan.addEventListener('click', () => {
+        if (!inputSpan) return; 
+            inputSpan.currentTime = 0;
+            warningTransition();
+    });
+    
+}
+
+function warningTransition() {
+    const change = document.querySelector('#input-span');
+    change.classList.add('warning');
+}
+
+function removeTransition(e) {
+    if(e.propertyName !== 'transform') return; // skip it if itś not a transform.
+    this.classList.remove('warning');
+}
+
+const input = document.querySelector('#input-span');
+input.addEventListener('transitionend', removeTransition);
+
+
+getGrid();
 clearButton();
 drawNormal();
+
+
