@@ -58,6 +58,57 @@ function drawRainbow() {
     }); 
 }
 
+function drawGradient() {
+    const gridCells = document.querySelectorAll('.grid-item');
+
+    gridCells.forEach((item) => {
+        item.addEventListener('mouseover', () => {
+        let random = Math.floor(Math.random() * 10) + 1;
+        item.style.backgroundColor = `var(--opacity-level-${random})`; 
+        console.log(random)  
+        });
+    }); 
+}
+
+
+function chooseDraw(normal, rainbow, gradient) {
+    if (normal) { drawNormal(); }
+    if (rainbow) { drawRainbow(); }
+    if (gradient) { drawGradient(); }
+}
+
+function pressNormalDraw() {
+    const normalButton = document.querySelector('#normal-draw');
+    normalButton.addEventListener('click', () => {
+        let normalToggle = true; 
+        let rainbowToggle = false;
+        let gradientToggle = false;
+        chooseDraw(normalToggle, rainbowToggle, gradientToggle);
+    });
+}
+
+function pressRainbowDraw() {
+    const rainbowButton = document.querySelector('#rainbow-draw');
+    rainbowButton.addEventListener('click', () => {
+        let normalToggle = false; 
+        let rainbowToggle = true;
+        let gradientToggle = false;
+        chooseDraw(normalToggle, rainbowToggle, gradientToggle);
+    });
+}
+//set up for gradient
+
+function pressGradientDraw() {
+    const rainbowButton = document.querySelector('#gradient-draw');
+    rainbowButton.addEventListener('click', () => {
+        let normalToggle = false; 
+        let rainbowToggle = false;
+        let gradientToggle = true;
+        chooseDraw(normalToggle, rainbowToggle, gradientToggle);
+    });
+}
+
+
 function clearButton() {
     const selectClearButton = document.querySelector('#clear-button');
     selectClearButton.addEventListener('click', () => {
@@ -87,7 +138,7 @@ function newGrid() {
         makeGrid(inputValue, inputValue);
 
         // This will need to be changed once Rainbow and Gradient are implemented.
-        drawNormal();   
+        chooseDraw();   
     }
 }
 
@@ -114,18 +165,20 @@ function newGridPressedEnter() {
 
 function spanColor() {
     const inputField = document.querySelector('#number-input');
-    const textSpan = document.querySelector('#input-span')
+    const textSpan = document.querySelector('#input-span');
 
     // Right input
     if (inputField.value >= 1 && inputField.value <= 64) {
         textSpan.style.color = 'green';
-        textSpan.style.scale = '1'
+        textSpan.style.scale = '1';
         inputField.value = Math.floor(inputField.value);
+        gridButtonColorGreen();
     // Wrong input    
     }  else {
         inputField.value = null;
         textSpan.style.color = 'red';
-        textSpan.style.scale = '1.2'
+        textSpan.style.scale = '1.2';
+        gridButtonColorRed();
     } 
 }
 
@@ -147,14 +200,30 @@ function textEnter() {
     });  
 }
 
+function gridButtonColorGreen() {
+    const selectGetGridButton = document.querySelector('#get-grid');
+    selectGetGridButton.style.backgroundColor = 'green';
+    selectGetGridButton.style.color = 'lightgreen';
+}
+
+function gridButtonColorRed() {
+    const selectGetGridButton = document.querySelector('#get-grid');
+    selectGetGridButton.style.backgroundColor = 'red';
+    selectGetGridButton.style.color = 'white'
+}
+
 // End input field and message //
+
 
 newGrid();
 newGridClick();
-//removeGrid();
+drawNormal();
+pressNormalDraw();
+pressRainbowDraw();
+pressGradientDraw()
+
 clearButton();
-//drawNormal();
-drawRainbow();
+
 
 pressGetGridButton();
 textEnter();

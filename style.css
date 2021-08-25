@@ -10,6 +10,16 @@ h1 {
     --grid-cols: 1;
     --grid-rows: 1;
     --grid-color: rgb(238, 237, 237);
+    --opacity-level-1: rgba(0, 0, 0, .15);
+    --opacity-level-2: rgba(0, 0, 0, .3);
+    --opacity-level-3: rgba(0, 0, 0, .35);
+    --opacity-level-4: rgba(0, 0, 0, .45);
+    --opacity-level-5: rgba(0, 0, 0, .55);
+    --opacity-level-6: rgba(0, 0, 0, .6);
+    --opacity-level-7: rgba(0, 0, 0, .7);
+    --opacity-level-8: rgba(0, 0, 0, .8);
+    --opacity-level-9: rgba(0, 0, 0, .9);
+    --opacity-level-10: rgba(0, 0, 0, .95);
   }
   
   #grid-container {
@@ -55,13 +65,19 @@ button {
     transition: all .5s ease;
 }
 
-.warning {
-    color: red;
-    transform: scale(1.2)
- 
-  
+#normal-draw {
+    color: var(--grid-color);
+    background-color: #333;;
 }
 
+#rainbow-draw {
+    background: linear-gradient(45deg, orange, red,  green, purple, blue, yellow);
+    color: white;
+}
+
+#gradient-draw {
+    background: linear-gradient(180deg, black, white, gray);
+}
 @media (min-width: 1140px) {
     #button-container {
         left: 15%;
